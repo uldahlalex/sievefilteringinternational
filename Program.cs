@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Sieve.Services;
 using sievefilteringinternational;
 using Testcontainers.PostgreSql;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddScoped<ISieveProcessor, SieveProcessor>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApiDocument();
 builder.Services.AddScoped<IPostService, PostService>();

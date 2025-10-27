@@ -1,10 +1,17 @@
+using Sieve.Models;
+using Sieve.Services;
+
 namespace sievefilteringinternational;
 
-public class PostService(MyDbContext ctx) : IPostService
+public class PostService(MyDbContext ctx, ISieveProcessor sieveProcessor) : IPostService
 {
-    public async Task<List<Post>> GetPosts()
+    public async Task<List<Post>> GetPosts(SieveModel sieveModel)
     {
-        return ctx.Posts.ToList();
+        IQueryable<Post> query = ctx.Posts;
+
+        query =  sieveProcessor.Apply(sieveModel, query);
+
+        return query.ToList();
 
     }
 }
