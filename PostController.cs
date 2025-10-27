@@ -2,14 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace sievefilteringinternational;
 
-public class PostController : ControllerBase
+public class PostController(IPostService postService) : ControllerBase
 {
     [HttpGet(nameof(GetPosts))]
     public async Task<object> GetPosts()
     {
-        return new
-        {
-            result = "that worked"
-        };
+        return await postService.GetPosts();
     }
 }
